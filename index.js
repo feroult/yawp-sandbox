@@ -12,3 +12,6 @@ function renderYawpSandbox(element) {
 
 window.React = React;
 window.renderYawpSandbox = renderYawpSandbox
+
+let isWebpackDevServer = !!parent.document.getElementById("okness")
+if (isWebpackDevServer) renderYawpSandbox(document.body)
