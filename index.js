@@ -1,4 +1,7 @@
+import React from 'react'
 import ReactDOM from 'react-dom'
+
+import Sandbox from './components/sandbox'
 
 function renderYawpSandbox(element) {
   ReactDOM.render(
@@ -7,4 +10,5 @@ function renderYawpSandbox(element) {
   )
 }
 
+window.React = React;
 window.renderYawpSandbox = renderYawpSandbox
