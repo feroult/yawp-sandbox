@@ -1,0 +1,27 @@
+{
+  "name": "yawp-sandbox",
+  "version": "1.0.0",
+  "description": "YAWP API Sandbox where you can test interacting with a local devserver using YAWP JS client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feroult/yawp-sandbox.git"
+  },
+  "keywords": [
+    "yawp",
+    "react",
+    "js",
+    "api",
+    "framework",
+    "sandbox"
+  ],
+  "author": "Walid Nawfal Sabihi & Fernando Ultremare",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/feroult/yawp-sandbox/issues"
+  },
+  "homepage": "https://github.com/feroult/yawp-sandbox#readme"
+}
