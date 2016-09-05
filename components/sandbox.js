@@ -1,9 +1,13 @@
 import React from 'react'
 
+import SandboxInput from './input'
+
 class Sandbox extends React.Component {
   render() {
     return (
-      <p> Welcome to the YAWP API Sandbox </p>
+      <div>
+        <SandboxInput />
+      </div>
     )
   }
 }
