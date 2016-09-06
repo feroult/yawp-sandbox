@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 
 import Sandbox from './components/sandbox'
 
+import yawp from 'yawp'
+window.yawp = yawp
+
 function renderYawpSandbox(element) {
   ReactDOM.render(
     <Sandbox />,
@@ -10,20 +13,36 @@ function renderYawpSandbox(element) {
   )
 }
 
+var log = "";
+
+function logClear() {
+  this.outputTextarea.setExceptionStyle(false)
+  this.outputTextarea.setLines("")
+  log = "";
+}
+
 //This function is bound to the Sandbox component
 function logOutput(output) {
-  this.outputTextarea.appendLine(JSON.stringify(output))
+  if (typeof(output) == "function") {
+    log += output.toString()
+  } else {
+    log += JSON.stringify(output, null, 2) + "\n"
+  }
 }
 
 //This function is bound to the Sandbox component
 function logException(output) {
-  let stringifiedError = JSON.stringify(output)
-  let modifiedError = stringifiedError.replace(new RegExp("\\\\n", "g"), "\n")
-  let finalError = "Exception occured:\n" + modifiedError
-  this.outputTextarea.setState({value: finalError})
+  this.outputTextarea.setExceptionStyle(true)
+  let finalError = "Exception occured: " + output.message + "\n" + output.stack
+  this.outputTextarea.setLines(finalError)
+  log = ""
 }
 
-function defineToJson() {
+function printCode() {
+  this.outputTextarea.setLines(log)
+}
+
+function implementErrorJSON() {
   if (!('toJSON' in Error.prototype))
   Object.defineProperty(Error.prototype, 'toJSON', {
       value: function () {
@@ -40,13 +59,17 @@ function defineToJson() {
   })
 }
 
-defineToJson()
+implementErrorJSON()
 
 window.logOutput = logOutput
 window.logException = logException
+window.logClear = logClear
 
-window.React = React;
+window.printCode = printCode
+
+window.React = React
 window.renderYawpSandbox = renderYawpSandbox
 
 let isWebpackDevServer = !!parent.document.getElementById("okness")
 if (isWebpackDevServer) renderYawpSandbox(document.body)
+else renderYawpSandbox(document.getElementById("container"))

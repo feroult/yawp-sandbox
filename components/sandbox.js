@@ -7,6 +7,11 @@ class Sandbox extends React.Component {
   constructor(props) {
     super(props)
     this.runCode = this.runCode.bind(this)
+    window.logOutput = window.logOutput.bind(this)
+    window.logException = window.logException.bind(this)
+    window.logClear = window.logClear.bind(this)
+    window.printCode = window.printCode.bind(this)
+    window.runCode = this.runCode
   }
   render() {
     return (
@@ -18,9 +23,7 @@ class Sandbox extends React.Component {
     )
   }
   runCode(code) {
-    this.outputTextarea.clearLines()
-    window.logOutput = window.logOutput.bind(this)
-    window.logException = window.logException.bind(this)
+    this.forceUpdate()
     try {
       eval(code)
     } catch (e) {
