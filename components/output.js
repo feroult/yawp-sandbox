@@ -25,7 +25,7 @@ class SandboxOutput extends React.Component {
   render() {
     return (
       <div>
-        <label htmlFor="outputTextarea">Output:</label>
+        <label className={"lead"} htmlFor="outputTextarea">Output:</label>
         <br/>
         <textarea id="outputTextarea" rows="10" cols="100" value={this.state.value} style={this.state.style} readOnly>
 

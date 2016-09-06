@@ -10,12 +10,12 @@ class SandboxInput extends React.Component {
   render() {
     return (
       <div>
-        <label htmlFor="inputTextarea">Input:</label>
+        <label className={"lead"} htmlFor="inputTextarea">Input:</label>
         <br/>
         <textarea ref={(c) => this._input = c} id="inputTextarea" rows="10" cols="100" style={{fontFamily: "monospace", fontSize: "1em"}}>
         </textarea>
         <br/>
-        <Button onClick={this.submitInput} disabled={false} />
+        <Button onClick={this.submitInput} disabled={false} className={"btn btn-primary"}/>
       </div>
     )
   }
