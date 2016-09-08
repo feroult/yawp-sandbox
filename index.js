@@ -15,18 +15,19 @@ function renderYawpSandbox(element) {
 
 var log = "";
 
-function logClear() {
-  this.outputTextarea.setExceptionStyle(false)
-  this.outputTextarea.setLines("")
-  log = "";
+//This function is bound to the Sandbox component
+function logClear(callback) {
+  window.output.setExceptionStyle(false)
+  window.output.setExceptionStyle(false)
+  window.output.clearLines(callback)
 }
 
 //This function is bound to the Sandbox component
 function logOutput(output) {
   if (typeof(output) == "function") {
-    log += output.toString()
+    window.output.appendLine(output.toString())
   } else {
-    log += JSON.stringify(output, null, 2) + "\n"
+    window.output.appendLine(JSON.stringify(output, null, 2) + "\n")
   }
 }
 
@@ -35,11 +36,11 @@ function logException(output) {
   this.outputTextarea.setExceptionStyle(true)
   let finalError = "Exception occured: " + output.message + "\n" + output.stack
   this.outputTextarea.setLines(finalError)
-  log = ""
+
 }
 
 function printCode() {
-  this.outputTextarea.setLines(log)
+  //this.outputTextarea.setLines(log)
 }
 
 function implementErrorJSON() {
@@ -73,3 +74,15 @@ window.renderYawpSandbox = renderYawpSandbox
 let isWebpackDevServer = !!parent.document.getElementById("okness")
 if (isWebpackDevServer) renderYawpSandbox(document.body)
 else renderYawpSandbox(document.getElementById("container"))
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  setTimeout(() => {
+    var backlog = console
+    console = {}
+    console.backlog = backlog
+    console.log = logOutput
+    console.error = logException
+    console.warn = logOutput
+    console.debug = logOutput
+  }, 500)
+})

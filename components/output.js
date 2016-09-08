@@ -34,11 +34,11 @@ class SandboxOutput extends React.Component {
     )
   }
   appendLine(line) {
-    let newState = this.state.value + "\n" + line
+    let newState = this.state.value + line + "\n"
     this.setState({ value: newState })
   }
-  clearLines() {
-    this.setState({ value: "" })
+  clearLines(callback) {
+    this.setState({ value: "" }, callback)
   }
   setLines(lines) {
     this.setState({ value: lines })

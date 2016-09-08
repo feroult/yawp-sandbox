@@ -35,13 +35,10 @@ class SandboxInput extends React.Component {
   }
   submitInput() {
     let inputCode = this.state.code
-    let modifiedCode = "logClear();\n" + inputCode.replace(new RegExp("console.log", "g"), "logOutput") + "\nprintCode()"
-    console.log(modifiedCode)
-    this.props.submitCode(modifiedCode)
+    window.logClear(() => this.props.submitCode(inputCode))
   }
   onChange(code) {
     this.setState({code: code})
-    console.log(this.state.code);
     return code
   }
 }
