@@ -15,6 +15,16 @@ function renderYawpSandbox(element) {
 
 var log = "";
 
+function format(output) {
+  if (typeof(output) == "function") {
+     return output.toString();
+  } else if(typeof yourVariable === 'object') {
+     return JSON.stringify(output, null, 2) + '\n';
+  } else {
+     return output;
+  }
+}
+
 //This function is bound to the Sandbox component
 function logClear(callback) {
   window.output.setExceptionStyle(false)
@@ -23,12 +33,14 @@ function logClear(callback) {
 }
 
 //This function is bound to the Sandbox component
-function logOutput(output) {
-  if (typeof(output) == "function") {
-    window.output.appendLine(output.toString())
-  } else {
-    window.output.appendLine(JSON.stringify(output, null, 2) + "\n")
-  }
+function logOutput() {
+  var args = Array.prototype.slice.call(arguments);
+    
+  var output = args.reduce(function(prev, curr) {
+      return format(prev) + ' ' + format(curr);
+  });
+
+  window.output.appendLine(output);
 }
 
 //This function is bound to the Sandbox component
