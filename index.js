@@ -13,7 +13,7 @@ function renderYawpSandbox(element) {
   )
 }
 
-var log = "";
+//var log = "";
 
 function format(output) {
   if (typeof(output) == "function") {
@@ -27,15 +27,18 @@ function format(output) {
 
 //This function is bound to the Sandbox component
 function logClear(callback) {
-  window.output.setExceptionStyle(false)
-  window.output.setExceptionStyle(false)
-  window.output.clearLines(callback)
+  try {
+    window.output.setExceptionStyle(false)
+    window.output.clearLines(callback)
+  } catch (e) { // Sometimes an exception occurs (React concurrency stuff)
+    setTimeout(() => { logClear(callback) }, 200) // Retry it after 200ms
+  }
 }
 
 //This function is bound to the Sandbox component
 function logOutput() {
   var args = Array.prototype.slice.call(arguments);
-    
+
   var output = args.reduce(function(prev, curr) {
       return format(prev) + ' ' + format(curr);
   });
@@ -45,10 +48,13 @@ function logOutput() {
 
 //This function is bound to the Sandbox component
 function logException(output) {
-  this.outputTextarea.setExceptionStyle(true)
-  let finalError = "Exception occured: " + output.message + "\n" + output.stack
-  this.outputTextarea.setLines(finalError)
-
+  try {
+    this.outputTextarea.setExceptionStyle(true)
+    let finalError = "Exception occured: " + output.message + "\n" + output.stack
+    this.outputTextarea.setLines(finalError)
+  } catch (e) { // Sometimes an exception occurs (React concurrency stuff)
+    setTimeout(() => { logException(output) }, 200) // Retry it after 200ms
+  }
 }
 
 function printCode() {

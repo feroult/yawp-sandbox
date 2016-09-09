@@ -29,7 +29,7 @@ class SandboxInput extends React.Component {
             editorProps={{$blockScrolling: true}} value={this.state.code} enableLiveAutocompletion={true} enableBasicAutocompletion={true}/>
         </div>
         <br/>
-        <Button onClick={this.submitInput} disabled={false} className={"btn btn-primary"}/>
+        <Button onClick={this.submitInput} disabled={false} className={"btn btn-primary"}> Run Code </Button>
       </div>
     )
   }
